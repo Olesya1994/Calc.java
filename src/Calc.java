@@ -1,8 +1,17 @@
-import java.util.Scanner;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
+
 public class Calc {
+    public static String[] calc(String inputString) {
+        String[] calc_inputString = inputString.split(" ");
+        if (calc_inputString.length != 3) {
+            Scanner inputString_a_value_again = new Scanner(System.in);
+            System.out.println("Неверный формат ввода данных. Введите выражение, разделяя каждый символ _пробелом_");
+            inputString = inputString_a_value_again.nextLine();
+            return calc(inputString);
+        } else {
+            return calc_inputString;
+        }
+    }
     public static void main(String[] args)   {
         int rez = 0, value1 = 0 , value2 = 0;// обьявляем переменные для вычислений
         Scanner in = new Scanner(System.in);
@@ -13,16 +22,12 @@ public class Calc {
         //создаём массив с римскими цифрами от 10 до 100
         String[] rimValues100 = new String[]{"X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC", "C"};
 
-        String[] words = sum.split(" "); // разделяем выражение в массив words на значения и арфметический знак
-         if (words.length != 3) {// проверяем кол-во введённых данных
-             System.out.println("Неверное кол-во введённых данных");
-             return;
-         }
+        String words[] = calc(sum);// разделяем выражение в массив words на значения и арфметический знак
         // проверка есть ли введённые значения  в массиве римских цифр
         List rimChar = new ArrayList<>(Arrays.asList(rimValues10));
         boolean rim = (rimChar.contains(words[2]) & rimChar.contains(words[0]));
         if (rim) {//если ввведены римские цифры
-            value1 = rimChar.indexOf(words[0]) + 1; //перевод из римских в арабские
+            value1 = rimChar.indexOf(words[0]) + 1; //пер евод из римских в арабские
             value2 = rimChar.indexOf(words[2]) + 1;
         } else {//если арабские цифры
             try {
@@ -64,7 +69,7 @@ public class Calc {
                 System.out.println("Ваше выражение равно: " + rez);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("Некорректные данные (получен отрицательный результат в римской системе исчисления");
+            System.out.println("Некорректные данные (получен отрицательный результат в римской системе исчисления)");
             return;
         }
 
